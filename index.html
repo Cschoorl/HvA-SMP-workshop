@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI - HvA Smart Media Production</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #08080a;
+            --bg-secondary: #0e0e12;
+            --bg-card: #151519;
+            --bg-card-hover: #1a1a1f;
+            --text-primary: #f8f8fa;
+            --text-secondary: #7a7a88;
+            --text-muted: #4a4a55;
+            --accent: #6366f1;
+            --accent-soft: rgba(99, 102, 241, 0.12);
+            --accent-glow: rgba(99, 102, 241, 0.25);
+            --gold: #d4a853;
+            --gold-soft: rgba(212, 168, 83, 0.12);
+            --border: rgba(255,255,255,0.06);
+            --border-light: rgba(255,255,255,0.03);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow: hidden;
+            font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+        }
+
+        .presentation-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            height: 100vh;
+        }
+
+        .slide-area {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .slide-area::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(ellipse 100% 80% at 0% 0%, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse 80% 60% at 100% 100%, rgba(212, 168, 83, 0.04) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .progress-bar {
+            height: 1px;
+            background: var(--border);
+            position: relative;
+            z-index: 10;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--gold));
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .slide-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 80px 120px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .slide {
+            display: none;
+            width: 100%;
+            max-width: 900px;
+            animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .slide-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 60px;
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-light);
+            position: relative;
+            z-index: 10;
+        }
+
+        .nav-btn {
+            padding: 14px 32px;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            color: var(--text-primary);
+            border-color: var(--accent);
+            background: var(--accent-soft);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.2;
+            cursor: not-allowed;
+        }
+
+        .slide-counter {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 500;
+            font-variant-numeric: tabular-nums;
+            letter-spacing: 2px;
+        }
+
+        /* Typography */
+        .slide h1 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 5rem;
+            font-weight: 400;
+            line-height: 1.05;
+            margin-bottom: 28px;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+        }
+
+        .slide h1 em {
+            font-style: italic;
+        }
+
+        .slide h2 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 3.2rem;
+            font-weight: 400;
+            line-height: 1.15;
+            margin-bottom: 36px;
+            color: var(--text-primary);
+            letter-spacing: -0.01em;
+        }
+
+        .slide h2 em {
+            font-style: italic;
+        }
+
+        .slide h3 {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .slide p {
+            font-size: 1.25rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            font-weight: 300;
+        }
+
+        .slide .lead {
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            font-weight: 300;
+        }
+
+        .slide .subtitle {
+            font-size: 11px;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-weight: 500;
+            margin-bottom: 24px;
+        }
+
+        .slide .big-question {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 2.4rem;
+            font-style: italic;
+            color: var(--text-primary);
+            line-height: 1.4;
+            margin-bottom: 32px;
+        }
+
+        /* Visual Elements */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .card-grid-2 {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 32px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card:hover {
+            background: var(--bg-card-hover);
+            border-color: rgba(255,255,255,0.1);
+        }
+
+        .card-number {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 2.5rem;
+            font-weight: 400;
+            color: var(--accent);
+            margin-bottom: 20px;
+            line-height: 1;
+        }
+
+        .card h4 {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+            letter-spacing: -0.01em;
+        }
+
+        .card p {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-bottom: 0;
+            line-height: 1.65;
+            font-weight: 400;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, var(--accent-soft) 0%, transparent 100%);
+            border-left: 2px solid var(--accent);
+            border-radius: 0 8px 8px 0;
+            padding: 28px 32px;
+            margin: 32px 0;
+        }
+
+        .highlight-box.gold {
+            background: linear-gradient(135deg, var(--gold-soft) 0%, transparent 100%);
+            border-left-color: var(--gold);
+        }
+
+        .highlight-box p {
+            font-size: 1.2rem;
+            color: var(--text-primary);
+            margin: 0;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+
+        .quote-box {
+            position: relative;
+            padding: 40px 44px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin: 36px 0;
+        }
+
+        .quote-box::before {
+            content: '"';
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 8rem;
+            color: var(--accent);
+            opacity: 0.15;
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            line-height: 1;
+        }
+
+        .quote-box p {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.4rem;
+            font-style: italic;
+            color: var(--text-primary);
+            margin: 0 0 16px 0;
+            line-height: 1.5;
+            font-weight: 400;
+        }
+
+        .quote-box .attribution {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            font-style: normal;
+            color: var(--text-muted);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .list-large {
+            list-style: none;
+            padding: 0;
+        }
+
+        .list-large li {
+            font-size: 1.2rem;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border-light);
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            color: var(--text-secondary);
+            font-weight: 300;
+        }
+
+        .list-large li::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            flex-shrink: 0;
+            margin-top: 12px;
+        }
+
+        .list-large li:last-child {
+            border-bottom: none;
+        }
+
+        .list-large li em {
+            color: var(--text-primary);
+            font-style: normal;
+        }
+
+        /* Timeline */
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin: 56px 0 32px;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            right: 30px;
+            height: 1px;
+            background: linear-gradient(90deg, var(--accent), var(--gold));
+        }
+
+        .timeline-item {
+            text-align: center;
+            position: relative;
+            flex: 1;
+        }
+
+        .timeline-year {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.1rem;
+            font-weight: 400;
+            color: var(--text-primary);
+            width: 40px;
+            height: 40px;
+            background: var(--bg-primary);
+            border: 1px solid var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 14px;
+            position: relative;
+            z-index: 1;
+            font-size: 0.75rem;
+            letter-spacing: -0.5px;
+        }
+
+        .timeline-item:nth-child(4) .timeline-year,
+        .timeline-item:nth-child(5) .timeline-year { 
+            border-color: var(--gold); 
+        }
+
+        .timeline-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.4;
+            font-weight: 400;
+        }
+
+        .timeline-label small {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        /* Stats */
+        .stat-row {
+            display: flex;
+            gap: 60px;
+            margin: 48px 0;
+            justify-content: center;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 3rem;
+            color: var(--accent);
+            margin-bottom: 12px;
+            font-weight: 400;
+        }
+
+        .stat-label {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            font-weight: 400;
+        }
+
+        .stat-label strong {
+            display: block;
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        /* Comparison */
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin: 36px 0;
+        }
+
+        .comparison-side {
+            padding: 32px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .comparison-side.left {
+            background: var(--bg-card);
+        }
+
+        .comparison-side.right {
+            background: var(--accent-soft);
+            border-color: rgba(99, 102, 241, 0.2);
+        }
+
+        .comparison-side h4 {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 18px;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .comparison-side.right h4 {
+            color: var(--accent);
+        }
+
+        .comparison-side p {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin: 0;
+            line-height: 1.65;
+        }
+
+        /* Title Slide */
+        .title-slide {
+            text-align: center;
+        }
+
+        .title-slide h1 {
+            font-size: 7rem;
+            margin-bottom: 24px;
+        }
+
+        .title-slide .lead {
+            margin-bottom: 0;
+        }
+
+        /* Outro */
+        .outro-slide {
+            text-align: center;
+        }
+
+        .outro-slide h1 {
+            font-size: 5rem;
+        }
+
+        /* Number list */
+        .number-list {
+            counter-reset: item;
+            list-style: none;
+            padding: 0;
+        }
+
+        .number-list li {
+            counter-increment: item;
+            display: flex;
+            align-items: flex-start;
+            gap: 28px;
+            padding: 24px 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .number-list li::before {
+            content: counter(item);
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.5rem;
+            color: var(--accent);
+            flex-shrink: 0;
+            width: 32px;
+        }
+
+        .number-list li:last-child {
+            border-bottom: none;
+        }
+
+        .number-list .item-content h4 {
+            font-size: 1.15rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+
+        .number-list .item-content p {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        /* Center text */
+        .centered {
+            text-align: center;
+        }
+
+        .centered h2 {
+            margin-bottom: 24px;
+        }
+
+        /* Keyboard hint */
+        .keyboard-hint {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-size: 11px;
+            color: var(--text-muted);
+            z-index: 100;
+            letter-spacing: 0.5px;
+        }
+
+        .keyboard-hint kbd {
+            background: var(--bg-secondary);
+            padding: 3px 8px;
+            border-radius: 3px;
+            margin: 0 4px;
+            font-family: inherit;
+            border: 1px solid var(--border);
+        }
+
+        /* Responsive */
+        @media (max-width: 1000px) {
+            .slide-content {
+                padding: 60px 80px;
+            }
+            .slide h1 {
+                font-size: 3.5rem;
+            }
+            .title-slide h1 {
+                font-size: 4.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <div class="slide-area">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress"></div>
+            </div>
+            
+            <div class="slide-content">
+                <!-- SLIDE 1: Title -->
+                <div class="slide active title-slide">
+                    <p class="subtitle">HvA Smart Media Production</p>
+                    <h1>De illusie van <em>intelligentie</em></h1>
+                    <p class="lead">Wat AI wel is, wat het niet is, en waarom dat uitmaakt</p>
+                </div>
+
+                <!-- SLIDE 2: Opening -->
+                <div class="slide centered">
+                    <p class="big-question">We hebben iets gebouwd dat we niet helemaal begrijpen.</p>
+                    <p>Het schrijft teksten, maakt beelden, voert gesprekken, schrijft code. Het lijkt te denken. Maar doet het dat?</p>
+                </div>
+
+                <!-- SLIDE 3: De paradox -->
+                <div class="slide">
+                    <h2>De <em>paradox</em></h2>
+                    <p>AI is tegelijkertijd het meest indrukwekkende en het meest overschatte wat we ooit hebben gebouwd.</p>
+                    <p>Het kan dingen die geen mens kan. En het faalt bij dingen die elk kind kan.</p>
+                    <div class="highlight-box gold">
+                        <p>Om AI te begrijpen, moet je beide kanten zien. Niet de hype. Niet de angst. De realiteit.</p>
+                    </div>
+                </div>
+
+                <!-- SLIDE 4: Drie vragen -->
+                <div class="slide">
+                    <h2>Drie vragen</h2>
+                    <ul class="number-list">
+                        <li>
+                            <div class="item-content">
+                                <h4>Wat is het eigenlijk?</h4>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-content">
+                                <h4>Wat kan het wel en niet?</h4>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-content">
+                                <h4>Wat verandert er?</h4>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- SLIDE 5: De definitie -->
+                <div class="slide">
+                    <h3>Vraag 1</h3>
+                    <h2>Wat is het <em>eigenlijk?</em></h2>
+                    <div class="quote-box">
+                        <p>AI is technologie die systemen mensachtige intelligentie geeft, zoals redeneren, leren en problemen oplossen.</p>
+                        <span class="attribution">— ChatGPT, toen ik het vroeg</span>
+                    </div>
+                    <p>Een nette definitie. Maar het mist het belangrijkste inzicht.</p>
+                </div>
+
+                <!-- SLIDE 6: Het echte inzicht -->
+                <div class="slide centered">
+                    <h2>Het echte <em>inzicht</em></h2>
+                    <p class="big-question">AI is patroonherkenning op een schaal die voor mensen onmogelijk is.</p>
+                    <p>Miljarden voorbeelden. Statistische patronen. En dan: voorspellen wat er waarschijnlijk moet komen.</p>
+                </div>
+
+                <!-- SLIDE 7: De metafoor -->
+                <div class="slide">
+                    <h2>De beste <em>metafoor</em></h2>
+                    <p>AI is een extreem geavanceerde autocomplete.</p>
+                    <p>Niet dom. Niet slim. Iets anders. Het voorspelt wat er waarschijnlijk moet komen, gebaseerd op alles wat het gezien heeft.</p>
+                    <div class="highlight-box">
+                        <p>Het "weet" niet wat het zegt. Het voorspelt alleen welke woorden waarschijnlijk volgen.</p>
+                    </div>
+                </div>
+
+                <!-- SLIDE 8: Vergelijking -->
+                <div class="slide centered">
+                    <div class="quote-box">
+                        <p>Dit is zoals de opkomst van het internet in 1997. We overschatten de korte termijn, en onderschatten de lange termijn.</p>
+                        <span class="attribution">— Benedict Evans</span>
+                    </div>
+                    <p>De hype is nu. De echte impact komt later. En ziet er anders uit dan we denken.</p>
+                </div>
+
+                <!-- SLIDE 9: Wat het niet is -->
+                <div class="slide">
+                    <h2>Wat het <em>niet</em> is</h2>
+                    <ul class="list-large">
+                        <li><em>Geen bewustzijn</em> — het ervaart niets</li>
+                        <li><em>Geen begrip</em> — het manipuleert symbolen zonder betekenis</li>
+                        <li><em>Geen creativiteit</em> — het recombineert patronen</li>
+                        <li><em>Geen intentie</em> — het wil niets</li>
+                    </ul>
+                    <p style="margin-top: 24px;">Dit is geen beperking. Dit is wat het <em>is</em>.</p>
+                </div>
+
+                <!-- SLIDE 10: Is AI intelligent? -->
+                <div class="slide">
+                    <h2>Is AI <em>intelligent?</em></h2>
+                    <p>Voordat we die vraag kunnen beantwoorden, moeten we eerst weten: wat is intelligentie eigenlijk?</p>
+                    <div class="highlight-box">
+                        <p>Intelligentie is geen bezit. Het is een proces. Intelligentie is groei.</p>
+                    </div>
+                    <p>We herkennen intelligentie aan groei. Mensen zijn niet intelligent omdat ze veel weten, maar omdat ze blijven leren. Stilstand is het einde van intelligentie.</p>
+                </div>
+
+                <!-- SLIDE 11: AI is niet intelligent -->
+                <div class="slide">
+                    <h2>AI is niet <em>intelligent</em></h2>
+                    <p>AI lijkt intelligent omdat het uitzonderlijk goed is in kennis ophalen en overtuigend presenteren.</p>
+                    <p>Maar snelheid is geen begrip. Vloeiendheid is geen inzicht. Wat we zien als intelligentie is geoptimaliseerde output.</p>
+                    <div class="highlight-box gold">
+                        <p>Intelligentie vereist een innerlijke drang om te groeien. Een soort nieuwsgierigheid. AI heeft die niet.</p>
+                    </div>
+                </div>
+
+                <!-- SLIDE 12: De illusie -->
+                <div class="slide centered">
+                    <p class="big-question">AI denkt niet. Het reflecteert ons denken terug naar ons.</p>
+                    <p>De illusie van intelligentie ontstaat niet uit AI zelf, maar uit onze eigen misinterpretatie ervan. We vullen de gaten in met aannames.</p>
+                </div>
+
+                <!-- SLIDE 10: Wat kan het - intro -->
+                <div class="slide">
+                    <h3>Vraag 2</h3>
+                    <h2>Wat kan het <em>wel en niet?</em></h2>
+                    <p class="lead">Het antwoord is genuanceerder dan de headlines.</p>
+                </div>
+
+                <!-- SLIDE 11: Wat het goed kan -->
+                <div class="slide">
+                    <h2>Waar het <em>goed</em> in is</h2>
+                    <div class="card-grid">
+                        <div class="card">
+                            <h4>Eerste versies maken</h4>
+                            <p>Drafts, concepten, variaties. Het startpunt, niet het eindpunt.</p>
+                        </div>
+                        <div class="card">
+                            <h4>Transformeren</h4>
+                            <p>Vertalen, samenvatten, herformuleren, format wisselen.</p>
+                        </div>
+                        <div class="card">
+                            <h4>Zoeken en structureren</h4>
+                            <p>Informatie vinden, ordenen, vergelijken.</p>
+                        </div>
+                        <div class="card">
+                            <h4>Schaal</h4>
+                            <p>Duizend variaties maken in de tijd van één.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SLIDE 12: Waar het slecht in is -->
+                <div class="slide">
+                    <h2>Waar het <em>slecht</em> in is</h2>
+                    <div class="card-grid">
+                        <div class="card">
+                            <h4>Feiten checken</h4>
+                            <p>Het verzint dingen. Met overtuiging. Zonder waarschuwing.</p>
+                        </div>
+                        <div class="card">
+                            <h4>Echt redeneren</h4>
+                            <p>Het simuleert logica, maar kan niet echt denken.</p>
+                        </div>
+                        <div class="card">
+                            <h4>Context begrijpen</h4>
+                            <p>Het kent jou niet, je situatie niet, de nuance niet.</p>
+                        </div>
+                        <div class="card">
+                            <h4>Oorspronkelijkheid</h4>
+                            <p>Het recombineert. Het bedenkt niets echt nieuws.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SLIDE 13: De interface -->
+                <div class="slide">
+                    <h2>De <em>interface</em> is de vraag</h2>
+                    <p>Bij de meeste software zie je knoppen. Je weet wat je kan doen. Bij AI typ je een vraag. Maar welke vraag?</p>
+                    <div class="highlight-box">
+                        <p>De kwaliteit van je vraag bepaalt de kwaliteit van het antwoord. Specificiteit wint.</p>
+                    </div>
+                    <p>Dit is nieuw. We hebben nog geen goede intuïtie voor wat werkt.</p>
+                </div>
+
+                <!-- SLIDE 14: De echte vraag -->
+                <div class="slide centered">
+                    <h2>De echte <em>vraag</em></h2>
+                    <p class="big-question">Niet: "Kan AI dit?"<br>Maar: "Kan AI dit goed genoeg voor dit doel?"</p>
+                    <p>Soms is 80% goed genoeg. Soms is 99% niet genoeg. Context bepaalt alles.</p>
+                </div>
+
+                <!-- SLIDE 15: Quote Naval -->
+                <div class="slide centered">
+                    <div class="quote-box">
+                        <p>AI vervangt geen mensen. Het vervangt taken. Wie dat begrijpt, heeft een voorsprong.</p>
+                        <span class="attribution">— Naval Ravikant</span>
+                    </div>
+                </div>
+
+                <!-- SLIDE 16: Waar gaat het heen - intro -->
+                <div class="slide">
+                    <h3>Vraag 3</h3>
+                    <h2>Wat <em>verandert</em> er?</h2>
+                    <p class="lead">Niet alles. Maar sommige dingen fundamenteel.</p>
+                </div>
+
+                <!-- SLIDE 17: De baseline verschuift -->
+                <div class="slide">
+                    <h2>De baseline <em>verschuift</em></h2>
+                    <p>Wat gisteren indrukwekkend was, is morgen standaard.</p>
+                    <p>Niet omdat AI alles kan. Maar omdat de drempel voor "goed genoeg" lager wordt.</p>
+                    <div class="highlight-box gold">
+                        <p>De vraag wordt: wat kun jij toevoegen dat AI niet kan?</p>
+                    </div>
+                </div>
+
+                <!-- SLIDE 18: Nieuwe mogelijkheden -->
+                <div class="slide">
+                    <h2>Nieuwe <em>mogelijkheden</em></h2>
+                    <div class="card-grid card-grid-2">
+                        <div class="card">
+                            <h4>Multimodaal</h4>
+                            <p>Eén systeem dat tekst, beeld, audio en video begrijpt én maakt. De grenzen tussen media vervagen.</p>
+                        </div>
+                        <div class="card">
+                            <h4>Agents</h4>
+                            <p>Van tools naar systemen die zelfstandig meerdere stappen uitvoeren. Jij geeft het doel, niet elke stap.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SLIDE 19: Nieuwe vragen -->
+                <div class="slide">
+                    <h2>Nieuwe <em>vragen</em></h2>
+                    <ul class="list-large">
+                        <li>Van wie is werk dat AI maakt op basis van andermans werk?</li>
+                        <li>Hoe weet je of iets echt of gegenereerd is?</li>
+                        <li>Wie is verantwoordelijk als AI fouten maakt?</li>
+                        <li>Wat betekent "authentiek" nog?</li>
+                    </ul>
+                </div>
+
+                <!-- SLIDE 20: De onzekerheid -->
+                <div class="slide centered">
+                    <h2>De eerlijke <em>waarheid</em></h2>
+                    <p class="big-question">Niemand weet precies waar dit heen gaat.</p>
+                    <p>Niet de bedrijven die het bouwen. Niet de experts. Niet de overheden. We bouwen het vliegtuig terwijl we vliegen.</p>
+                </div>
+
+                <!-- SLIDE 21: Take-aways -->
+                <div class="slide">
+                    <h2>Wat te <em>doen</em></h2>
+                    <div class="card-grid">
+                        <div class="card">
+                            <div class="card-number">1</div>
+                            <h4>Gebruik het</h4>
+                            <p>Niet om te weten wat anderen zeggen. Om zelf te ervaren wat werkt en wat niet.</p>
+                        </div>
+                        <div class="card">
+                            <div class="card-number">2</div>
+                            <h4>Vertrouw het niet</h4>
+                            <p>Check alles. AI liegt met overtuiging. Jij blijft verantwoordelijk.</p>
+                        </div>
+                        <div class="card">
+                            <div class="card-number">3</div>
+                            <h4>Vraag: wat voeg ik toe?</h4>
+                            <p>Niet: kan AI dit? Maar: wat kan ik dat AI niet kan?</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SLIDE 22: Closing thought -->
+                <div class="slide centered">
+                    <p class="big-question">De illusie is overtuigend. Maar het blijft een illusie.</p>
+                    <p>Gebruik het. Begrijp het. Vertrouw het niet blindelings. En blijf vragen stellen.</p>
+                </div>
+
+                <!-- SLIDE 23: Outro -->
+                <div class="slide outro-slide">
+                    <h1>Vragen?</h1>
+                </div>
+            </div>
+
+            <div class="slide-controls">
+                <button class="nav-btn" id="prevBtn" onclick="prevSlide()">Vorige</button>
+                <span class="slide-counter"><span id="currentSlide">1</span> / <span id="totalSlides">26</span></span>
+                <button class="nav-btn" id="nextBtn" onclick="nextSlide()">Volgende</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="keyboard-hint">
+        Navigeer met <kbd>←</kbd> <kbd>→</kbd> of <kbd>Space</kbd>
+    </div>
+
+    <script>
+        let currentSlideIndex = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        document.getElementById('totalSlides').textContent = totalSlides;
+
+        function updateSlide() {
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active');
+                if (index === currentSlideIndex) {
+                    slide.classList.add('active');
+                }
+            });
+
+            document.getElementById('currentSlide').textContent = currentSlideIndex + 1;
+            
+            const progress = ((currentSlideIndex + 1) / totalSlides) * 100;
+            document.getElementById('progress').style.width = progress + '%';
+
+            document.getElementById('prevBtn').disabled = currentSlideIndex === 0;
+            document.getElementById('nextBtn').disabled = currentSlideIndex === totalSlides - 1;
+        }
+
+        function nextSlide() {
+            if (currentSlideIndex < totalSlides - 1) {
+                currentSlideIndex++;
+                updateSlide();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlideIndex > 0) {
+                currentSlideIndex--;
+                updateSlide();
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                prevSlide();
+            }
+        });
+
+        updateSlide();
+    </script>
+</body>
+</html>

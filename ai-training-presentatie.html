@@ -3,26 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI - HvA Smart Media Production</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <title>De illusie van intelligentie - HvA Smart Media Production</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --black: #000000;
-            --black-light: #0a0a0a;
-            --black-card: #0f0f0f;
-            --black-elevated: #161616;
-            --white: #ffffff;
-            --white-90: rgba(255,255,255,0.9);
-            --white-70: rgba(255,255,255,0.7);
-            --white-50: rgba(255,255,255,0.5);
-            --white-30: rgba(255,255,255,0.3);
-            --white-15: rgba(255,255,255,0.15);
-            --white-08: rgba(255,255,255,0.08);
-            --white-04: rgba(255,255,255,0.04);
-            --blue: #2563eb;
-            --blue-light: #3b82f6;
-            --blue-soft: rgba(37, 99, 235, 0.15);
-            --blue-glow: rgba(37, 99, 235, 0.4);
+            --bg-primary: #08080a;
+            --bg-secondary: #0e0e12;
+            --bg-card: #151519;
+            --bg-card-hover: #1a1a1f;
+            --text-primary: #f8f8fa;
+            --text-secondary: #7a7a88;
+            --text-muted: #4a4a55;
+            --accent: #6366f1;
+            --accent-soft: rgba(99, 102, 241, 0.12);
+            --gold: #d4a853;
+            --gold-soft: rgba(212, 168, 83, 0.12);
+            --border: rgba(255,255,255,0.06);
+            --border-light: rgba(255,255,255,0.03);
         }
 
         * {
@@ -32,9 +29,9 @@
         }
 
         body {
-            font-family: 'Outfit', -apple-system, sans-serif;
-            background: var(--black);
-            color: var(--white);
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
             min-height: 100vh;
             overflow: hidden;
         }
@@ -55,33 +52,26 @@
         .slide-area::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            right: -50%;
-            bottom: -50%;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
             background: 
-                radial-gradient(ellipse 50% 50% at 20% 20%, rgba(37, 99, 235, 0.08) 0%, transparent 50%),
-                radial-gradient(ellipse 40% 40% at 80% 80%, rgba(37, 99, 235, 0.05) 0%, transparent 50%);
+                radial-gradient(ellipse 100% 80% at 0% 0%, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse 80% 60% at 100% 100%, rgba(212, 168, 83, 0.04) 0%, transparent 50%);
             pointer-events: none;
-            animation: subtleMove 20s ease-in-out infinite;
-        }
-
-        @keyframes subtleMove {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(2%, 2%); }
         }
 
         .progress-bar {
-            height: 2px;
-            background: var(--white-08);
+            height: 1px;
+            background: var(--border);
             position: relative;
             z-index: 10;
         }
 
         .progress-fill {
             height: 100%;
-            background: var(--blue);
-            box-shadow: 0 0 20px var(--blue-glow);
+            background: linear-gradient(90deg, var(--accent), var(--gold));
             transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -90,7 +80,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 80px 140px;
+            padding: 80px 120px;
             position: relative;
             z-index: 1;
         }
@@ -98,8 +88,8 @@
         .slide {
             display: none;
             width: 100%;
-            max-width: 960px;
-            animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            max-width: 900px;
+            animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .slide.active {
@@ -107,7 +97,7 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(40px); }
+            from { opacity: 0; transform: translateY(24px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -115,248 +105,223 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 28px 80px;
-            background: var(--black);
-            border-top: 1px solid var(--white-08);
+            padding: 24px 60px;
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-light);
             position: relative;
             z-index: 10;
         }
 
         .nav-btn {
-            padding: 16px 40px;
+            padding: 14px 32px;
             background: transparent;
-            border: 1px solid var(--white-15);
-            color: var(--white-50);
-            font-family: 'Outfit', sans-serif;
-            font-size: 12px;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 13px;
             font-weight: 500;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            border-radius: 0;
+            letter-spacing: 0.5px;
+            border-radius: 4px;
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.3s ease;
         }
 
         .nav-btn:hover {
-            color: var(--white);
-            border-color: var(--blue);
-            background: var(--blue-soft);
-            box-shadow: 0 0 30px rgba(37, 99, 235, 0.2);
+            color: var(--text-primary);
+            border-color: var(--accent);
+            background: var(--accent-soft);
         }
 
         .nav-btn:disabled {
-            opacity: 0.15;
+            opacity: 0.2;
             cursor: not-allowed;
         }
 
         .slide-counter {
-            font-size: 13px;
-            color: var(--white-30);
-            font-weight: 400;
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 500;
             font-variant-numeric: tabular-nums;
-            letter-spacing: 4px;
+            letter-spacing: 2px;
         }
 
         /* Typography */
         .slide h1 {
-            font-family: 'Cormorant Garamond', Georgia, serif;
-            font-size: 5.5rem;
-            font-weight: 300;
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 5rem;
+            font-weight: 400;
             line-height: 1.05;
-            margin-bottom: 32px;
-            color: var(--white);
-            letter-spacing: -0.03em;
+            margin-bottom: 28px;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
         }
 
         .slide h1 em {
             font-style: italic;
-            color: var(--blue-light);
         }
 
         .slide h2 {
-            font-family: 'Cormorant Garamond', Georgia, serif;
-            font-size: 3.5rem;
-            font-weight: 300;
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 3.2rem;
+            font-weight: 400;
             line-height: 1.15;
-            margin-bottom: 40px;
-            color: var(--white);
-            letter-spacing: -0.02em;
+            margin-bottom: 36px;
+            color: var(--text-primary);
+            letter-spacing: -0.01em;
         }
 
         .slide h2 em {
             font-style: italic;
-            color: var(--blue-light);
         }
 
         .slide h3 {
-            font-family: 'Outfit', sans-serif;
             font-size: 11px;
-            font-weight: 500;
-            color: var(--blue);
-            margin-bottom: 16px;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 12px;
             text-transform: uppercase;
-            letter-spacing: 4px;
+            letter-spacing: 3px;
         }
 
         .slide p {
-            font-size: 1.3rem;
-            line-height: 1.8;
-            color: var(--white-70);
-            margin-bottom: 28px;
+            font-size: 1.25rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
             font-weight: 300;
         }
 
         .slide .lead {
-            font-size: 1.6rem;
-            color: var(--white-90);
+            font-size: 1.5rem;
+            color: var(--text-primary);
             font-weight: 300;
         }
 
         .slide .subtitle {
-            font-family: 'Outfit', sans-serif;
             font-size: 11px;
-            color: var(--blue);
+            color: var(--gold);
             text-transform: uppercase;
-            letter-spacing: 6px;
+            letter-spacing: 4px;
             font-weight: 500;
-            margin-bottom: 28px;
+            margin-bottom: 24px;
         }
 
         .slide .big-question {
-            font-family: 'Cormorant Garamond', Georgia, serif;
-            font-size: 2.8rem;
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 2.4rem;
             font-style: italic;
-            color: var(--white);
+            color: var(--text-primary);
             line-height: 1.4;
-            margin-bottom: 36px;
-            font-weight: 300;
+            margin-bottom: 32px;
         }
 
         /* Visual Elements */
         .card-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 24px;
-            margin-top: 48px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
         }
 
         .card-grid-2 {
             grid-template-columns: repeat(2, 1fr);
         }
 
-        .card {
-            background: var(--black-card);
-            border: 1px solid var(--white-08);
-            border-radius: 0;
-            padding: 40px;
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative;
-            overflow: hidden;
+        .card-grid-4 {
+            grid-template-columns: repeat(4, 1fr);
         }
 
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--blue), transparent);
-            opacity: 0;
-            transition: opacity 0.5s ease;
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 28px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .card:hover {
-            background: var(--black-elevated);
-            border-color: var(--white-15);
-            transform: translateY(-4px);
-        }
-
-        .card:hover::before {
-            opacity: 1;
+            background: var(--bg-card-hover);
+            border-color: rgba(255,255,255,0.1);
         }
 
         .card-number {
-            font-family: 'Cormorant Garamond', Georgia, serif;
-            font-size: 3rem;
-            font-weight: 300;
-            color: var(--blue);
-            margin-bottom: 24px;
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 2rem;
+            font-weight: 400;
+            color: var(--accent);
+            margin-bottom: 16px;
             line-height: 1;
         }
 
         .card h4 {
-            font-family: 'Outfit', sans-serif;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             font-weight: 500;
-            margin-bottom: 16px;
-            color: var(--white);
-            letter-spacing: 0.02em;
+            margin-bottom: 10px;
+            color: var(--text-primary);
         }
 
         .card p {
-            font-size: 1rem;
-            color: var(--white-50);
+            font-size: 0.9rem;
+            color: var(--text-secondary);
             margin-bottom: 0;
-            line-height: 1.7;
-            font-weight: 300;
+            line-height: 1.6;
         }
 
         .highlight-box {
-            background: var(--blue-soft);
-            border-left: 3px solid var(--blue);
-            border-radius: 0;
-            padding: 36px 40px;
-            margin: 40px 0;
-            position: relative;
+            background: linear-gradient(135deg, var(--accent-soft) 0%, transparent 100%);
+            border-left: 2px solid var(--accent);
+            border-radius: 0 8px 8px 0;
+            padding: 28px 32px;
+            margin: 32px 0;
+        }
+
+        .highlight-box.gold {
+            background: linear-gradient(135deg, var(--gold-soft) 0%, transparent 100%);
+            border-left-color: var(--gold);
         }
 
         .highlight-box p {
-            font-size: 1.3rem;
-            color: var(--white);
+            font-size: 1.2rem;
+            color: var(--text-primary);
             margin: 0;
-            line-height: 1.7;
-            font-weight: 300;
+            line-height: 1.6;
         }
 
         .quote-box {
             position: relative;
-            padding: 50px 56px;
-            background: var(--black-card);
-            border: 1px solid var(--white-08);
-            border-radius: 0;
-            margin: 44px 0;
+            padding: 40px 44px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin: 36px 0;
         }
 
         .quote-box::before {
             content: '"';
-            font-family: 'Cormorant Garamond', Georgia, serif;
-            font-size: 10rem;
-            color: var(--blue);
-            opacity: 0.2;
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 8rem;
+            color: var(--accent);
+            opacity: 0.15;
             position: absolute;
-            top: -20px;
-            left: 24px;
+            top: -10px;
+            left: 20px;
             line-height: 1;
         }
 
         .quote-box p {
-            font-family: 'Cormorant Garamond', Georgia, serif;
-            font-size: 1.6rem;
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.4rem;
             font-style: italic;
-            color: var(--white);
-            margin: 0 0 20px 0;
+            color: var(--text-primary);
+            margin: 0 0 16px 0;
             line-height: 1.5;
-            font-weight: 300;
         }
 
         .quote-box .attribution {
-            font-family: 'Outfit', sans-serif;
+            font-family: 'Inter', sans-serif;
             font-size: 0.85rem;
             font-style: normal;
-            color: var(--white-30);
-            font-weight: 400;
-            letter-spacing: 1px;
+            color: var(--text-muted);
+            font-weight: 500;
         }
 
         .list-large {
@@ -365,25 +330,24 @@
         }
 
         .list-large li {
-            font-size: 1.25rem;
-            padding: 24px 0;
-            border-bottom: 1px solid var(--white-08);
+            font-size: 1.15rem;
+            padding: 18px 0;
+            border-bottom: 1px solid var(--border-light);
             display: flex;
             align-items: flex-start;
-            gap: 24px;
-            color: var(--white-70);
+            gap: 20px;
+            color: var(--text-secondary);
             font-weight: 300;
         }
 
         .list-large li::before {
             content: '';
-            width: 8px;
-            height: 8px;
-            background: var(--blue);
-            border-radius: 0;
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
             flex-shrink: 0;
-            margin-top: 12px;
-            box-shadow: 0 0 12px var(--blue-glow);
+            margin-top: 10px;
         }
 
         .list-large li:last-child {
@@ -391,152 +355,81 @@
         }
 
         .list-large li em {
-            color: var(--white);
+            color: var(--text-primary);
             font-style: normal;
-            font-weight: 400;
         }
 
-        /* Timeline */
-        .timeline {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin: 64px 0 40px;
-            position: relative;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            top: 20px;
-            left: 30px;
-            right: 30px;
-            height: 1px;
-            background: var(--blue);
-            box-shadow: 0 0 10px var(--blue-glow);
-        }
-
-        .timeline-item {
-            text-align: center;
-            position: relative;
-            flex: 1;
-        }
-
-        .timeline-year {
-            font-family: 'Outfit', sans-serif;
-            font-size: 0.75rem;
-            font-weight: 500;
-            color: var(--white);
-            width: 44px;
-            height: 44px;
-            background: var(--black);
-            border: 1px solid var(--blue);
-            border-radius: 0;
+        /* Case study */
+        .case-header {
             display: flex;
             align-items: center;
-            justify-content: center;
-            margin: 0 auto 16px;
-            position: relative;
-            z-index: 1;
-            letter-spacing: 0;
+            gap: 16px;
+            margin-bottom: 32px;
         }
 
-        .timeline-item:nth-child(4) .timeline-year,
-        .timeline-item:nth-child(5) .timeline-year { 
-            border-color: var(--blue); 
+        .case-logo {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--accent);
         }
 
-        .timeline-label {
+        .case-tagline {
             font-size: 0.9rem;
-            color: var(--white-70);
-            line-height: 1.4;
-            font-weight: 300;
-        }
-
-        .timeline-label small {
-            display: block;
-            font-size: 0.75rem;
-            color: var(--white-30);
-            margin-top: 6px;
-        }
-
-        /* Stats */
-        .stat-row {
-            display: flex;
-            gap: 80px;
-            margin: 56px 0;
-            justify-content: center;
-        }
-
-        .stat {
-            text-align: center;
-        }
-
-        .stat-number {
-            font-family: 'Cormorant Garamond', Georgia, serif;
-            font-size: 3.5rem;
-            color: var(--blue);
-            margin-bottom: 16px;
-            font-weight: 300;
-        }
-
-        .stat-label {
-            font-size: 1rem;
-            color: var(--white-70);
-            line-height: 1.5;
-            font-weight: 300;
-        }
-
-        .stat-label strong {
-            display: block;
-            color: var(--white);
-            font-size: 1.05rem;
-            font-weight: 500;
-            margin-bottom: 6px;
+            color: var(--text-muted);
+            font-style: italic;
         }
 
         /* Comparison */
         .comparison {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 28px;
-            margin: 44px 0;
+            gap: 24px;
+            margin: 36px 0;
         }
 
         .comparison-side {
-            padding: 40px;
-            border-radius: 0;
-            border: 1px solid var(--white-08);
+            padding: 28px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
         }
 
-        .comparison-side.left {
-            background: var(--black-card);
+        .comparison-side.good {
+            background: rgba(16, 185, 129, 0.08);
+            border-color: rgba(16, 185, 129, 0.2);
         }
 
-        .comparison-side.right {
-            background: var(--blue-soft);
-            border-color: rgba(37, 99, 235, 0.3);
+        .comparison-side.bad {
+            background: rgba(239, 68, 68, 0.08);
+            border-color: rgba(239, 68, 68, 0.2);
         }
 
         .comparison-side h4 {
-            font-family: 'Outfit', sans-serif;
             font-size: 10px;
             text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-bottom: 20px;
-            font-weight: 500;
-            color: var(--white-30);
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+            font-weight: 600;
         }
 
-        .comparison-side.right h4 {
-            color: var(--blue);
-        }
+        .comparison-side.good h4 { color: #10b981; }
+        .comparison-side.bad h4 { color: #ef4444; }
 
-        .comparison-side p {
-            font-size: 1rem;
-            color: var(--white-70);
+        .comparison-side ul {
+            list-style: none;
+            padding: 0;
             margin: 0;
-            line-height: 1.7;
+        }
+
+        .comparison-side li {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .comparison-side li:last-child {
+            border-bottom: none;
         }
 
         /* Title Slide */
@@ -545,13 +438,8 @@
         }
 
         .title-slide h1 {
-            font-size: 7.5rem;
-            margin-bottom: 32px;
-            font-weight: 300;
-        }
-
-        .title-slide .lead {
-            margin-bottom: 0;
+            font-size: 5.5rem;
+            margin-bottom: 24px;
         }
 
         /* Outro */
@@ -560,99 +448,89 @@
         }
 
         .outro-slide h1 {
-            font-size: 6rem;
-            font-weight: 300;
+            font-size: 5rem;
         }
 
-        /* Number list */
-        .number-list {
-            counter-reset: item;
-            list-style: none;
-            padding: 0;
-        }
-
-        .number-list li {
-            counter-increment: item;
-            display: flex;
-            align-items: flex-start;
-            gap: 32px;
-            padding: 28px 0;
-            border-bottom: 1px solid var(--white-08);
-        }
-
-        .number-list li::before {
-            content: counter(item);
-            font-family: 'Cormorant Garamond', Georgia, serif;
-            font-size: 1.8rem;
-            color: var(--blue);
-            flex-shrink: 0;
-            width: 36px;
-            font-weight: 300;
-        }
-
-        .number-list li:last-child {
-            border-bottom: none;
-        }
-
-        .number-list .item-content h4 {
-            font-family: 'Outfit', sans-serif;
-            font-size: 1.2rem;
-            font-weight: 500;
-            color: var(--white);
-            margin-bottom: 8px;
-        }
-
-        .number-list .item-content p {
-            font-size: 1rem;
-            color: var(--white-50);
-            margin: 0;
-        }
-
-        /* Center text */
+        /* Centered */
         .centered {
             text-align: center;
         }
 
-        .centered h2 {
-            margin-bottom: 28px;
+        /* Workflow */
+        .workflow {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 32px;
+        }
+
+        .workflow-phase {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 24px;
+        }
+
+        .workflow-phase h4 {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent);
+            margin-bottom: 16px;
+        }
+
+        .workflow-phase ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .workflow-phase li {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            padding: 6px 0;
         }
 
         /* Keyboard hint */
         .keyboard-hint {
             position: fixed;
-            bottom: 28px;
+            bottom: 24px;
             left: 50%;
             transform: translateX(-50%);
-            background: var(--black-card);
-            border: 1px solid var(--white-08);
-            padding: 12px 24px;
-            border-radius: 0;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 10px 20px;
+            border-radius: 4px;
             font-size: 11px;
-            color: var(--white-30);
+            color: var(--text-muted);
             z-index: 100;
-            letter-spacing: 1px;
         }
 
         .keyboard-hint kbd {
-            background: var(--black);
-            padding: 4px 10px;
-            border-radius: 0;
-            margin: 0 6px;
+            background: var(--bg-secondary);
+            padding: 3px 8px;
+            border-radius: 3px;
+            margin: 0 4px;
             font-family: inherit;
-            border: 1px solid var(--white-15);
-            color: var(--white-50);
+            border: 1px solid var(--border);
         }
 
         /* Responsive */
         @media (max-width: 1000px) {
             .slide-content {
-                padding: 60px 60px;
+                padding: 60px 40px;
             }
             .slide h1 {
-                font-size: 3.5rem;
+                font-size: 3rem;
             }
             .title-slide h1 {
-                font-size: 4.5rem;
+                font-size: 3.5rem;
+            }
+            .card-grid-4 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .workflow {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -665,347 +543,252 @@
             </div>
             
             <div class="slide-content">
-                <!-- ============================================ -->
-                <!-- DEEL 1: PRAKTISCH                            -->
-                <!-- ============================================ -->
 
-                <!-- SLIDE 1: Title -->
+                <!-- ==================== -->
+                <!-- TITEL -->
+                <!-- ==================== -->
+                
                 <div class="slide active title-slide">
                     <p class="subtitle">HvA Smart Media Production</p>
-                    <h1>AI voor <em>mediamakers</em></h1>
-                    <p class="lead">Van hype naar praktijk — wat je nu moet weten</p>
+                    <h1>De illusie van <em>intelligentie</em></h1>
+                    <p class="lead">Wat AI wel is, wat het niet is, en waarom dat uitmaakt</p>
                 </div>
 
-                <!-- SLIDE 2: Intro -->
-                <div class="slide centered">
-                    <p class="big-question">AI is overal. Maar wat kun je er concreet mee?</p>
-                    <p>We gaan van praktisch naar filosofisch. Eerst: wat werkt. Dan: wat betekent het.</p>
-                </div>
+                <!-- ==================== -->
+                <!-- DEEL 1: PRAKTISCH -->
+                <!-- ==================== -->
 
-                <!-- SLIDE 3: Wat is AI eigenlijk -->
+                <!-- Wat is AI -->
                 <div class="slide">
                     <h3>Deel 1: Praktisch</h3>
                     <h2>Wat is AI <em>eigenlijk?</em></h2>
-                    <p>Vergeet de sci-fi beelden. AI is simpeler én complexer dan je denkt.</p>
-                    <div class="highlight-box">
-                        <p>AI is patroonherkenning op schaal. Het leert van miljarden voorbeelden en voorspelt wat er waarschijnlijk moet komen.</p>
+                    <div class="quote-box">
+                        <p>AI is technologie die systemen mensachtige intelligentie geeft, zoals redeneren, leren en problemen oplossen.</p>
+                        <span class="attribution">— ChatGPT</span>
                     </div>
-                    <p>Denk aan een extreem geavanceerde autocomplete. Het "weet" niet wat het zegt — het voorspelt wat waarschijnlijk past.</p>
+                    <p>In de praktijk: software die patronen herkent in grote hoeveelheden data, en die patronen toepast op nieuwe situaties.</p>
                 </div>
 
-                <!-- SLIDE 4: Drie soorten AI -->
+                <!-- Simpel gezegd -->
+                <div class="slide centered">
+                    <h2>Simpel gezegd</h2>
+                    <p class="big-question">AI is een extreem geavanceerde autocomplete.</p>
+                    <p>Het voorspelt wat er waarschijnlijk moet komen — woorden, pixels, geluid — gebaseerd op miljarden voorbeelden.</p>
+                </div>
+
+                <!-- Wat kan AI vandaag -->
                 <div class="slide">
-                    <h2>Drie soorten <em>AI</em></h2>
-                    <div class="card-grid">
+                    <h2>Wat kan AI <em>vandaag?</em></h2>
+                    <div class="card-grid card-grid-4">
                         <div class="card">
-                            <h4>Taal (LLMs)</h4>
-                            <p>ChatGPT, Claude, Gemini. Tekst genereren, samenvatten, vertalen, coderen. De meest volwassen vorm.</p>
+                            <h4>Tekst</h4>
+                            <p>Schrijven, vertalen, samenvatten, code genereren</p>
                         </div>
                         <div class="card">
                             <h4>Beeld</h4>
-                            <p>Midjourney, DALL-E, Stable Diffusion. Van tekst naar beeld. Steeds realistischer, steeds sneller.</p>
+                            <p>Genereren, bewerken, upscalen, stijl aanpassen</p>
                         </div>
                         <div class="card">
-                            <h4>Video & Audio</h4>
-                            <p>Sora, Runway, ElevenLabs, Suno. De nieuwste frontier. Nog niet perfect, maar de potentie is enorm.</p>
+                            <h4>Audio</h4>
+                            <p>Transcriptie, stemklonen, muziek, geluidseffecten</p>
+                        </div>
+                        <div class="card">
+                            <h4>Video</h4>
+                            <p>Genereren, editing, VFX, motion tracking</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- SLIDE 5: Wat kan AI vandaag -->
+                <!-- Waar is het goed in -->
                 <div class="slide">
-                    <h2>Wat kan AI <em>vandaag?</em></h2>
-                    <div class="card-grid card-grid-2">
-                        <div class="card">
-                            <h4>Beeld & Video</h4>
-                            <p><em>Midjourney, DALL-E, Runway, Sora, Kling</em> — concept naar visual in seconden. Moodboards, pitches, storyboards.</p>
+                    <h2>Waar is het <em>goed</em> in?</h2>
+                    <div class="comparison">
+                        <div class="comparison-side good">
+                            <h4>Sterke punten</h4>
+                            <ul>
+                                <li>Eerste versies en drafts maken</li>
+                                <li>Variaties genereren op schaal</li>
+                                <li>Repetitieve taken automatiseren</li>
+                                <li>Vertalen en herformuleren</li>
+                                <li>Ideeën brainstormen</li>
+                            </ul>
                         </div>
-                        <div class="card">
-                            <h4>Audio & Stem</h4>
-                            <p><em>ElevenLabs, Suno, Udio</em> — voice-overs, muziek, sound design. Prototype audio zonder studio.</p>
-                        </div>
-                        <div class="card">
-                            <h4>Tekst & Script</h4>
-                            <p><em>ChatGPT, Claude, Notion AI</em> — brainstormen, scripts, research, formats. Je denkpartner.</p>
-                        </div>
-                        <div class="card">
-                            <h4>Workflow & Editing</h4>
-                            <p><em>Descript, CapCut, Opus Clip</em> — edit video als tekst, auto-captions, clips voor socials.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- SLIDE 6: Waar het goed in is -->
-                <div class="slide">
-                    <h2>Waar het <em>goed</em> in is</h2>
-                    <div class="card-grid">
-                        <div class="card">
-                            <h4>Eerste versies</h4>
-                            <p>Drafts, concepten, variaties. Het startpunt, niet het eindpunt. 80% in 20% van de tijd.</p>
-                        </div>
-                        <div class="card">
-                            <h4>Transformeren</h4>
-                            <p>Vertalen, samenvatten, herformuleren, format wisselen. Van podcast naar artikel naar social posts.</p>
-                        </div>
-                        <div class="card">
-                            <h4>Schaal</h4>
-                            <p>1000 variaties in de tijd van 1. Personalisatie, A/B testing, lokalisatie.</p>
-                        </div>
-                        <div class="card">
-                            <h4>Saai werk</h4>
-                            <p>Transcripties, ondertitels, metadata, tagging. Tijdrovers worden minuten.</p>
+                        <div class="comparison-side bad">
+                            <h4>Zwakke punten</h4>
+                            <ul>
+                                <li>Feiten checken (hallucineert)</li>
+                                <li>Originele ideeën bedenken</li>
+                                <li>Context en nuance begrijpen</li>
+                                <li>Consistentie over langere stukken</li>
+                                <li>Specifieke huisstijlen vasthouden</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
 
-                <!-- SLIDE 7: Waar het faalt -->
-                <div class="slide">
-                    <h2>Waar het <em>faalt</em></h2>
-                    <div class="card-grid">
-                        <div class="card">
-                            <h4>Feiten</h4>
-                            <p>Het verzint dingen. Met overtuiging. "Hallucinations" — altijd fact-checken.</p>
-                        </div>
-                        <div class="card">
-                            <h4>Nuance & Context</h4>
-                            <p>Het kent jouw merk niet, je publiek niet, de subtiliteiten niet. Jij wel.</p>
-                        </div>
-                        <div class="card">
-                            <h4>Echte originaliteit</h4>
-                            <p>Het recombineert bestaande patronen. Echt nieuwe ideeën komen van mensen.</p>
-                        </div>
-                        <div class="card">
-                            <h4>Emotionele intelligentie</h4>
-                            <p>Het simuleert empathie, maar voelt niets. De menselijke connectie blijft van jou.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- SLIDE 8: Quote Naval -->
+                <!-- De praktijk -->
                 <div class="slide centered">
-                    <div class="quote-box">
-                        <p>AI vervangt geen mensen. Het vervangt taken. Wie dat begrijpt, heeft een voorsprong.</p>
-                        <span class="attribution">— Naval Ravikant</span>
-                    </div>
+                    <h2>De <em>praktijk</em></h2>
+                    <p class="big-question">AI is goed in 80% leveren. De laatste 20% blijft mensenwerk.</p>
+                    <p>Soms is 80% genoeg. Soms is 99% niet genoeg. Context bepaalt alles.</p>
                 </div>
 
-                <!-- SLIDE 9: Nieuwe bedrijven - intro -->
+                <!-- Case Study: HAI Agency -->
                 <div class="slide">
-                    <h2>Nieuwe <em>bedrijven</em> door AI</h2>
-                    <p>AI creëert niet alleen tools — het creëert nieuwe businessmodellen. Bedrijven die werk doen dat voorheen onmogelijk of onbetaalbaar was.</p>
+                    <h2>Wat voor bedrijven <em>ontstaan</em> er?</h2>
+                    <div class="case-header">
+                        <span class="case-logo">HAI Agency</span>
+                        <span class="case-tagline">Humans + AI</span>
+                    </div>
                     <div class="highlight-box">
-                        <p>De interessantste zijn niet de pure AI-bedrijven, maar de "Human + AI" hybrids.</p>
+                        <p>"Hollywood-quality at brand speed"</p>
                     </div>
+                    <p>Een Nederlands bureau dat AI inzet voor video, CGI, VFX en motion design. Hun filosofie: <em>"Led by humans, amplified by AI."</em></p>
                 </div>
 
-                <!-- SLIDE 10: HAI Agency Case -->
+                <!-- HAI Agency: Wat ze doen -->
                 <div class="slide">
-                    <h2>Case: <em>HAI Agency</em></h2>
-                    <p class="lead" style="margin-bottom: 32px;">"Humans + AI" — een Nederlands bureau dat de toekomst laat zien.</p>
-                    <div class="card-grid card-grid-2">
-                        <div class="card">
-                            <h4>Hun filosofie</h4>
-                            <p>"Hollywood-quality at brand speed"<br>"Led by humans, amplified by AI"</p>
-                        </div>
-                        <div class="card">
-                            <h4>Hun toolkit</h4>
-                            <p>Generative AI, CGI, VFX & Simulation, Motion Design, AI UGC</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- SLIDE 11: HAI - JD Sports -->
-                <div class="slide">
-                    <h2>HAI × <em>JD Sports</em></h2>
-                    <p>Een campagne die traditionele shoots vervangt door AI-gegenereerde content.</p>
-                    <div class="highlight-box">
-                        <p>"Looks shot, not generated" — het doel is dat je het verschil niet ziet.</p>
-                    </div>
-                    <ul class="list-large">
-                        <li><em>Snelheid</em> — van concept naar eindproduct in dagen, niet weken</li>
-                        <li><em>Schaalbaarheid</em> — eindeloze variaties voor verschillende markten</li>
-                        <li><em>Kosten</em> — fractie van traditionele productie</li>
-                    </ul>
-                </div>
-
-                <!-- SLIDE 12: From prompts to pipelines -->
-                <div class="slide">
-                    <h2>Van prompts naar <em>pipelines</em></h2>
-                    <p>De evolutie van AI-gebruik in productie:</p>
+                    <h2>HAI Agency: <em>Wat ze doen</em></h2>
                     <div class="card-grid">
                         <div class="card">
-                            <div class="card-number">1</div>
-                            <h4>Experimenteren</h4>
-                            <p>Losse prompts, trial and error, "kijken wat er uitkomt"</p>
+                            <h4>Generative AI</h4>
+                            <p>Beelden en video genereren vanuit prompts en referenties</p>
                         </div>
                         <div class="card">
-                            <div class="card-number">2</div>
-                            <h4>Systematiseren</h4>
-                            <p>Herbruikbare prompts, templates, consistente output</p>
+                            <h4>CGI & VFX</h4>
+                            <p>3D assets en visuele effecten, versneld door AI</p>
                         </div>
                         <div class="card">
-                            <div class="card-number">3</div>
-                            <h4>Automatiseren</h4>
-                            <p>Pipelines die creatief schalen, AI als productiesysteem</p>
+                            <h4>Motion Design</h4>
+                            <p>Animaties en bewegend beeld op schaal produceren</p>
+                        </div>
+                        <div class="card">
+                            <h4>AI UGC</h4>
+                            <p>User-generated content stijl, maar AI-gegenereerd</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- SLIDE 13: AI in jouw workflow - intro -->
+                <!-- HAI Agency: De aanpak -->
+                <div class="slide">
+                    <h2>De aanpak: <em>"From prompts to pipelines"</em></h2>
+                    <p>HAI Agency bouwt systemen die creatief werk schaalbaar maken:</p>
+                    <ul class="list-large">
+                        <li>AI automatiseert: editing, ideation, asset generation</li>
+                        <li>Mensen focussen op: strategie, concept, kwaliteitscontrole</li>
+                        <li>Resultaat: <em>"Looks shot, not generated"</em></li>
+                    </ul>
+                    <p style="margin-top: 24px;">Dit is de trend: AI neemt taken over, mensen nemen regie.</p>
+                </div>
+
+                <!-- Jouw workflow -->
                 <div class="slide">
                     <h2>AI in jouw <em>workflow</em></h2>
-                    <p class="lead">Per fase van mediaproductie: waar AI nu al waarde toevoegt.</p>
-                </div>
-
-                <!-- SLIDE 14: Pre-productie -->
-                <div class="slide">
-                    <h2><em>Pre-productie</em></h2>
-                    <p style="color: var(--blue); font-size: 0.9rem; letter-spacing: 2px; margin-bottom: 24px;">IDEATION & PLANNING</p>
-                    <div class="card-grid card-grid-2">
-                        <div class="card">
-                            <h4>Brainstormpartner</h4>
-                            <p>Concepten genereren, angles vinden, formats bedenken. AI als creatieve sparringpartner.</p>
+                    <div class="workflow">
+                        <div class="workflow-phase">
+                            <h4>Pre-productie</h4>
+                            <ul>
+                                <li>Research en samenvatten</li>
+                                <li>Scripts en concepten</li>
+                                <li>Moodboards genereren</li>
+                                <li>Storyboards schetsen</li>
+                            </ul>
                         </div>
-                        <div class="card">
-                            <h4>Script-assistent</h4>
-                            <p>Eerste drafts, dialoog suggesties, structuur feedback. Van idee naar script sneller.</p>
+                        <div class="workflow-phase">
+                            <h4>Productie</h4>
+                            <ul>
+                                <li>AI-gegenereerde b-roll</li>
+                                <li>Realtime transcriptie</li>
+                                <li>Voice cloning voor scratch</li>
+                                <li>Quick composites</li>
+                            </ul>
                         </div>
-                        <div class="card">
-                            <h4>Storyboard-generator</h4>
-                            <p>Visuele concepten maken zonder illustrator. Shot-by-shot visualisaties.</p>
-                        </div>
-                        <div class="card">
-                            <h4>Research & Briefing</h4>
-                            <p>Doelgroep-insights, competitor analysis, trend research. Uren werk in minuten.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- SLIDE 15: Productie -->
-                <div class="slide">
-                    <h2><em>Productie</em></h2>
-                    <p style="color: var(--blue); font-size: 0.9rem; letter-spacing: 2px; margin-bottom: 24px;">OPNAME & CREATIE</p>
-                    <div class="card-grid card-grid-2">
-                        <div class="card">
-                            <h4>Real-time transcriptie</h4>
-                            <p>Live ondertiteling, instant searchable interviews.</p>
-                        </div>
-                        <div class="card">
-                            <h4>AI-generated assets</h4>
-                            <p>B-roll, graphics, achtergronden. Geen stockfoto's meer nodig.</p>
-                        </div>
-                        <div class="card">
-                            <h4>Voice & Music</h4>
-                            <p>Scratch voice-overs, temp music, sound effects on demand.</p>
-                        </div>
-                        <div class="card">
-                            <h4>Virtual production</h4>
-                            <p>AI-gegenereerde omgevingen, digital doubles, virtual sets.</p>
+                        <div class="workflow-phase">
+                            <h4>Post-productie</h4>
+                            <ul>
+                                <li>Auto-editing en rough cuts</li>
+                                <li>Ondertiteling en vertaling</li>
+                                <li>Color matching</li>
+                                <li>Upscaling en cleanup</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
 
-                <!-- SLIDE 16: Post-productie -->
-                <div class="slide">
-                    <h2><em>Post-productie</em></h2>
-                    <p style="color: var(--blue); font-size: 0.9rem; letter-spacing: 2px; margin-bottom: 24px;">EDITING & DISTRIBUTIE</p>
-                    <div class="card-grid card-grid-2">
-                        <div class="card">
-                            <h4>Auto-editing</h4>
-                            <p>Rough cuts op basis van transcript, highlight detection, pacing suggesties.</p>
-                        </div>
-                        <div class="card">
-                            <h4>Kleur & Audio</h4>
-                            <p>Automatische kleurcorrectie, audio cleanup, noise removal.</p>
-                        </div>
-                        <div class="card">
-                            <h4>Repurposing</h4>
-                            <p>Lange video → korte clips, artikel → social posts, podcast → audiogram.</p>
-                        </div>
-                        <div class="card">
-                            <h4>Lokalisatie</h4>
-                            <p>Automatische vertaling, lip-sync dubbing, markt-specifieke versies.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- ============================================ -->
-                <!-- DEEL 2: FILOSOFISCH                          -->
-                <!-- ============================================ -->
-
-                <!-- SLIDE 17: Transitie -->
+                <!-- Transitie -->
                 <div class="slide centered">
+                    <p class="big-question">Tot zover het praktische. Nu de diepere vraag.</p>
+                </div>
+
+                <!-- ==================== -->
+                <!-- DEEL 2: FILOSOFISCH -->
+                <!-- ==================== -->
+
+                <!-- Is AI intelligent? -->
+                <div class="slide">
                     <h3>Deel 2: Filosofisch</h3>
-                    <p class="big-question">Nu we weten wat AI kan, de belangrijkere vraag: wat betekent het?</p>
-                </div>
-
-                <!-- SLIDE 18: Is AI intelligent? -->
-                <div class="slide">
                     <h2>Is AI echt <em>intelligent?</em></h2>
-                    <p>Voordat we antwoord geven, moeten we eerst weten: wat is intelligentie eigenlijk?</p>
-                    <div class="highlight-box">
-                        <p>Intelligentie is geen bezit. Het is een proces. Intelligentie is groei, nieuwsgierigheid, het vermogen om te leren.</p>
+                    <p>Voordat we die vraag kunnen beantwoorden: wat is intelligentie eigenlijk?</p>
+                    <div class="highlight-box gold">
+                        <p>Intelligentie is geen bezit. Het is een proces. Intelligentie is groei.</p>
                     </div>
-                    <p>AI lijkt intelligent omdat het snel en vloeiend antwoordt. Maar snelheid is geen begrip. Vloeiendheid is geen inzicht.</p>
                 </div>
 
-                <!-- SLIDE 19: De illusie -->
+                <!-- Intelligentie = groei -->
                 <div class="slide">
-                    <h2>De <em>illusie</em> van intelligentie</h2>
-                    <ul class="list-large">
-                        <li><em>Geen bewustzijn</em> — het ervaart niets, voelt niets</li>
-                        <li><em>Geen begrip</em> — het manipuleert symbolen zonder betekenis</li>
-                        <li><em>Geen creativiteit</em> — het recombineert patronen uit trainingsdata</li>
-                        <li><em>Geen intentie</em> — het wil niets, het optimaliseert alleen</li>
-                    </ul>
-                    <p style="margin-top: 28px;">Dit is geen beperking. Dit is wat het <em>is</em>.</p>
+                    <h2>Intelligentie is <em>groei</em></h2>
+                    <p>We herkennen intelligentie aan groei. Mensen zijn niet intelligent omdat ze veel weten, maar omdat ze blijven leren.</p>
+                    <p>Stilstand is het einde van intelligentie.</p>
+                    <div class="highlight-box">
+                        <p>Intelligentie vereist een innerlijke drang om te groeien. Een soort nieuwsgierigheid. AI heeft die niet.</p>
+                    </div>
                 </div>
 
-                <!-- SLIDE 20: Reflectie -->
+                <!-- AI is niet intelligent -->
+                <div class="slide">
+                    <h2>AI is niet <em>intelligent</em></h2>
+                    <p>AI lijkt intelligent omdat het uitzonderlijk goed is in kennis ophalen en overtuigend presenteren.</p>
+                    <ul class="list-large">
+                        <li>Snelheid is geen begrip</li>
+                        <li>Vloeiendheid is geen inzicht</li>
+                        <li>Output is geen intelligentie</li>
+                    </ul>
+                </div>
+
+                <!-- De illusie -->
                 <div class="slide centered">
                     <p class="big-question">AI denkt niet. Het reflecteert ons denken terug naar ons.</p>
-                    <p>De illusie van intelligentie ontstaat niet uit AI zelf, maar uit onze eigen interpretatie. We vullen de gaten in met aannames.</p>
+                    <p>De illusie van intelligentie ontstaat niet uit AI zelf, maar uit onze eigen misinterpretatie ervan.</p>
                 </div>
 
-                <!-- SLIDE 21: Nieuwe vragen -->
+                <!-- Nieuwe vragen -->
                 <div class="slide">
                     <h2>Nieuwe <em>vragen</em></h2>
                     <ul class="list-large">
-                        <li><em>Eigendom</em> — van wie is werk dat AI maakt op basis van andermans werk?</li>
-                        <li><em>Authenticiteit</em> — hoe weet je of iets echt of gegenereerd is?</li>
-                        <li><em>Verantwoordelijkheid</em> — wie is aansprakelijk als AI fouten maakt?</li>
-                        <li><em>Waarde</em> — wat betekent "creativiteit" als machines het kunnen simuleren?</li>
+                        <li>Van wie is werk dat AI maakt op basis van andermans werk?</li>
+                        <li>Hoe weet je of iets echt of gegenereerd is?</li>
+                        <li>Wie is verantwoordelijk als AI fouten maakt?</li>
+                        <li>Wat betekent "authentiek" nog?</li>
+                        <li>Wat is creativiteit als machines het ook kunnen?</li>
                     </ul>
                 </div>
 
-                <!-- SLIDE 22: De eerlijke waarheid -->
+                <!-- De onzekerheid -->
                 <div class="slide centered">
-                    <h2>De eerlijke <em>waarheid</em></h2>
-                    <p class="big-question">Niemand weet precies waar dit heen gaat.</p>
-                    <p>Niet de bedrijven die het bouwen. Niet de experts. Niet de overheden. We bouwen het vliegtuig terwijl we vliegen.</p>
-                </div>
-
-                <!-- SLIDE 23: Mijn visie -->
-                <div class="slide">
-                    <h2>Waar ik denk dat het <em>heen gaat</em></h2>
-                    <div class="highlight-box">
-                        <p>Over 3-5 jaar: AI is de onzichtbare laag onder alles. Geen aparte tool, maar ingebouwd in elke creatieve software.</p>
+                    <div class="quote-box">
+                        <p>Dit is zoals de opkomst van het internet in 1997. We overschatten de korte termijn, en onderschatten de lange termijn.</p>
+                        <span class="attribution">— Benedict Evans</span>
                     </div>
-                    <ul class="list-large">
-                        <li><em>"Goed genoeg" wordt gratis</em> — basis-content is een commodity. De waarde zit in het uitzonderlijke.</li>
-                        <li><em>Human touch als premium</em> — authenticiteit en persoonlijkheid worden schaarser en waardevoller.</li>
-                        <li><em>Nieuwe rollen</em> — minder uitvoerders, meer regisseurs. AI is het orkest, jij bent de dirigent.</li>
-                    </ul>
                 </div>
 
-                <!-- SLIDE 24: Take-aways -->
+                <!-- Wat te doen -->
                 <div class="slide">
                     <h2>Wat te <em>doen</em></h2>
                     <div class="card-grid">
                         <div class="card">
                             <div class="card-number">1</div>
                             <h4>Gebruik het</h4>
-                            <p>Niet lezen over AI — ervaar het zelf. Ontdek wat werkt en wat niet in jouw praktijk.</p>
+                            <p>Niet om te weten wat anderen zeggen. Om zelf te ervaren wat werkt en wat niet.</p>
                         </div>
                         <div class="card">
                             <div class="card-number">2</div>
@@ -1015,26 +798,27 @@
                         <div class="card">
                             <div class="card-number">3</div>
                             <h4>Vraag: wat voeg ik toe?</h4>
-                            <p>Niet: kan AI dit? Maar: wat kan ik dat AI niet kan? Daar zit je waarde.</p>
+                            <p>Niet: kan AI dit? Maar: wat kan ik dat AI niet kan?</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- SLIDE 25: Closing -->
+                <!-- Closing -->
                 <div class="slide centered">
-                    <p class="big-question">AI is een tool. Een krachtige tool. Maar het blijft een tool.</p>
-                    <p>De mens die de tool bestuurt, bepaalt de waarde. Dat ben jij.</p>
+                    <p class="big-question">De illusie is overtuigend. Maar het blijft een illusie.</p>
+                    <p>Gebruik het. Begrijp het. Vertrouw het niet blindelings. En blijf vragen stellen.</p>
                 </div>
 
-                <!-- SLIDE 26: Outro -->
+                <!-- Outro -->
                 <div class="slide outro-slide">
                     <h1>Vragen?</h1>
                 </div>
+
             </div>
 
             <div class="slide-controls">
                 <button class="nav-btn" id="prevBtn" onclick="prevSlide()">Vorige</button>
-                <span class="slide-counter"><span id="currentSlide">1</span> / <span id="totalSlides">26</span></span>
+                <span class="slide-counter"><span id="currentSlide">1</span> / <span id="totalSlides">22</span></span>
                 <button class="nav-btn" id="nextBtn" onclick="nextSlide()">Volgende</button>
             </div>
         </div>
